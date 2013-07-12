@@ -1,6 +1,7 @@
 
 package domainModel;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,13 +9,13 @@ import java.util.Objects;
  *
  * @author lewandowsky
  */
-public class Usuario {
+public class Usuario implements Serializable{
     private int idUsuario;
     private String nome;
     private String senha;
     private Date dataUltimoAcesso;
     
-    private Usuario(){
+    public Usuario(){
         this.idUsuario = 0;
         this.dataUltimoAcesso = new Date();
         this.nome = "";
