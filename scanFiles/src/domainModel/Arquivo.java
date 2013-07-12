@@ -2,6 +2,7 @@
 package domainModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -13,7 +14,7 @@ public class Arquivo {
     private Date dataCriacao;
     private boolean ativo;
     private int tipo;
-    private String codMidia;
+    
 
     public Arquivo() {
         this.nome = "";
@@ -21,7 +22,7 @@ public class Arquivo {
         this.dataCriacao = new Date();
         this.ativo = true;
         this.tipo = 0;
-        this.codMidia = "";
+    
     }
 
     public String getNome() {
@@ -64,13 +65,36 @@ public class Arquivo {
         this.tipo = tipo;
     }
 
-    public String getCodMidia() {
-        return codMidia;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.nome);
+        hash = 71 * hash + Objects.hashCode(this.endereco);
+        hash = 71 * hash + Objects.hashCode(this.dataCriacao);
+        hash = 71 * hash + (this.ativo ? 1 : 0);
+        hash = 71 * hash + this.tipo;
+        return hash;
     }
 
-    public void setCodMidia(String codMidia) {
-        this.codMidia = codMidia;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Arquivo other = (Arquivo) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataCriacao, other.dataCriacao)) {
+            return false;
+        }
+        return true;
     }
+
+    
 
     @Override
     public String toString() {
