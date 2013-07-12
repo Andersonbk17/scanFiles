@@ -17,6 +17,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
      */
     public frmMenuPrincipal() {
         initComponents();
+        this.setTitle("ScanFile release 0.1.2");
     }
 
     /**
@@ -33,7 +34,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItemConfiguracoes = new javax.swing.JMenuItem();
         jMenuItemSair = new javax.swing.JMenuItem();
         jMenuItemFechar = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuListagem = new javax.swing.JMenu();
+        jMenuItemMidia = new javax.swing.JMenuItem();
+        jMenuItemArquivos = new javax.swing.JMenuItem();
+        jMenuScan = new javax.swing.JMenu();
+        jMenuItemScanMidia = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1224, 700));
@@ -62,8 +67,27 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuSistema);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuListagem.setText("Listagem");
+
+        jMenuItemMidia.setText("Midias");
+        jMenuListagem.add(jMenuItemMidia);
+
+        jMenuItemArquivos.setText("Arquivos");
+        jMenuListagem.add(jMenuItemArquivos);
+
+        jMenuBar1.add(jMenuListagem);
+
+        jMenuScan.setText("Scan");
+
+        jMenuItemScanMidia.setText("Midia");
+        jMenuItemScanMidia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemScanMidiaActionPerformed(evt);
+            }
+        });
+        jMenuScan.add(jMenuItemScanMidia);
+
+        jMenuBar1.add(jMenuScan);
 
         setJMenuBar(jMenuBar1);
 
@@ -82,14 +106,22 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFecharActionPerformed
-        if(JOptionPane.showConfirmDialog(rootPane,"SAIR", "Você tem certeza que deseja sair ?",JOptionPane.OK_CANCEL_OPTION) == 0){
+        if(JOptionPane.showConfirmDialog(rootPane,"Você tem certeza que deseja sair ?", "Pergunta",JOptionPane.OK_CANCEL_OPTION) == 0){
             System.exit(0);
         }
     }//GEN-LAST:event_jMenuItemFecharActionPerformed
 
     private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
        this.dispose();
+       frmLogin janela = new frmLogin();
+       janela.setVisible(true);
     }//GEN-LAST:event_jMenuItemSairActionPerformed
+
+    private void jMenuItemScanMidiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemScanMidiaActionPerformed
+       frmScanner janela = new frmScanner();
+       janela.setVisible(true);
+       this.add(janela);
+    }//GEN-LAST:event_jMenuItemScanMidiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,11 +158,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemArquivos;
     private javax.swing.JMenuItem jMenuItemConfiguracoes;
     private javax.swing.JMenuItem jMenuItemFechar;
+    private javax.swing.JMenuItem jMenuItemMidia;
     private javax.swing.JMenuItem jMenuItemSair;
+    private javax.swing.JMenuItem jMenuItemScanMidia;
+    private javax.swing.JMenu jMenuListagem;
+    private javax.swing.JMenu jMenuScan;
     private javax.swing.JMenu jMenuSistema;
     // End of variables declaration//GEN-END:variables
 }
