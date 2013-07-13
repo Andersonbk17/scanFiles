@@ -8,6 +8,9 @@ import domainModel.Arquivo;
 import domainModel.Diretorios;
 import java.io.File;
 import java.nio.file.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -45,12 +48,15 @@ public class frmScanner extends javax.swing.JInternalFrame {
         modelo.addColumn("Caminho");
         modelo.addColumn("Data de Criação");
         modelo.addColumn("Tamanho");
-        
+        DateFormat df = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss.SSS");  
         for(File a : this.litaArquivos){
             Vector v = new Vector();
             v.add(0,a.getName());
             v.add(1,a.getPath());
-            v.add(2,a.lastModified());
+            Date tmpData = new Date(a.lastModified());
+            df.format(tmpData);
+            
+            v.add(2,tmpData);
             v.add(3,(a.length() / 1024));
             //v.add(3,a.getTipo());
             modelo.addRow(v);
@@ -164,16 +170,16 @@ public class frmScanner extends javax.swing.JInternalFrame {
        JFileChooser pasta = new JFileChooser();
        pasta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
        pasta.showOpenDialog(this);
-       this.diretorio = pasta.getSelectedFile().getPath();
+       this.txtCaminhoDaMidia.setText( pasta.getSelectedFile().getPath());
       
        
     }//GEN-LAST:event_btnEscolherActionPerformed
 
     private void btnScanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanActionPerformed
-        listarArquivosDietorio(diretorio);
+        listarArquivosDietorio(txtCaminhoDaMidia.getText());
         preencheTabela();
     }//GEN-LAST:event_btnScanActionPerformed
-    private String diretorio = "";
+   
     private List<File> litaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscolher;
