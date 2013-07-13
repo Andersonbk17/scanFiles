@@ -4,6 +4,7 @@
  */
 package domainModel;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Objects;
  */
 public class Midia implements Serializable{
     private String codMidia;
-    private List<Arquivo> listaDeArquivos;
+    private List<File> listaDeArquivos;
     private String descricao;
 
     public Midia() {
@@ -32,11 +33,11 @@ public class Midia implements Serializable{
         this.codMidia = codMidia;
     }
 
-    public List<Arquivo> getListaDeArquivos() {
+    public List<File> getListaDeArquivos() {
         return listaDeArquivos;
     }
 
-    public void setListaDeArquivos(List<Arquivo> listaDeArquivos) {
+    public void setListaDeArquivos(List<File> listaDeArquivos) {
         this.listaDeArquivos = listaDeArquivos;
     }
 
@@ -48,13 +49,13 @@ public class Midia implements Serializable{
         this.descricao = descricao;
     }
     
-    public void addArquivo(Arquivo a){
+    public void addArquivo(File a){
         if(!this.listaDeArquivos.contains(a)){
             this.listaDeArquivos.add(a);
         }
     }
     
-    public void removeArquivo(Arquivo a){
+    public void removeArquivo(File a){
         if(this.listaDeArquivos.contains(a)){
             this.listaDeArquivos.remove(a);
         }
