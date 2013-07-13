@@ -5,7 +5,9 @@
 package presentation;
 
 import domainModel.Arquivo;
+import domainModel.Diretorios;
 import java.io.File;
+import java.nio.file.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -27,19 +29,14 @@ public class frmScanner extends javax.swing.JInternalFrame {
     
     
     private void listarArquivosDietorio(String Caminho){
-        File dir = new File(Caminho);
-        String [] lista = dir.list();
-        File[] listFiles = dir.listFiles();
-        listFiles.toString();
-        //lenght tamanho do arquivo
-        
-        
-        for(File a : listFiles){
-            System.out.print(a.length() + "\n");
-            
-        }
-    
-    
+      Diretorios tmp = new Diretorios();
+        this.litaArquivos = tmp.listarArquivosDiretorio(Caminho);
+        /*
+         * 
+         * teste
+        for(File f : listarArquivosDiretorio){
+            System.out.print(f.getName() +"tamanho = " + (f.length() / 1024)+"\n");
+        */
     }
     
     private void preencheTabela(){
@@ -47,14 +44,15 @@ public class frmScanner extends javax.swing.JInternalFrame {
         modelo.addColumn("Nome do Arquivo");
         modelo.addColumn("Caminho");
         modelo.addColumn("Data de Criação");
-        modelo.addColumn("Tipo");
+        modelo.addColumn("Tamanho");
         
-        for(Arquivo a : this.litaArquivos){
+        for(File a : this.litaArquivos){
             Vector v = new Vector();
-            v.add(0,a.getNome());
-            v.add(1,a.getEndereco());
-            v.add(2,a.getDataCriacao());
-            v.add(3,a.getTipo());
+            v.add(0,a.getName());
+            v.add(1,a.getPath());
+            v.add(2,a.lastModified());
+            v.add(3,(a.length() / 1024));
+            //v.add(3,a.getTipo());
             modelo.addRow(v);
         
         }
@@ -173,9 +171,10 @@ public class frmScanner extends javax.swing.JInternalFrame {
 
     private void btnScanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanActionPerformed
         listarArquivosDietorio(diretorio);
+        preencheTabela();
     }//GEN-LAST:event_btnScanActionPerformed
     private String diretorio = "";
-    private List<Arquivo> litaArquivos = new LinkedList<>();
+    private List<File> litaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscolher;
     private javax.swing.JButton btnScan;
