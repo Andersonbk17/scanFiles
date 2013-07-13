@@ -14,9 +14,14 @@ import java.util.List;
  */
 public class Diretorios {
     
-    public List<File> listarArquivosDiretorio(String caminho){
+    public List<File> listarArquivosDiretorio(String caminho) throws ErroValidaçãoException{
         List<File> listaArquivos = new LinkedList<>();
         File dir = new File(caminho);
+       
+            if(!dir.isDirectory()) {
+                throw new  ErroValidaçãoException("O caminho informado não é um diretório valido !");
+                
+            }
         
         for(File f : dir.listFiles()){
             if(f.isDirectory()){
@@ -25,9 +30,7 @@ public class Diretorios {
                 listaArquivos.add(f);
             }
         }
-  
-        
-        
+      
        return listaArquivos;
     }
     

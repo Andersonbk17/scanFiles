@@ -5,6 +5,7 @@
 package presentation;
 
 import domainModel.Diretorios;
+import domainModel.ErroValidaçãoException;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,10 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,13 +35,14 @@ public class frmScanner extends javax.swing.JInternalFrame {
     
     private void listarArquivosDietorio(String Caminho){
       Diretorios tmp = new Diretorios();
-        this.litaArquivos = tmp.listarArquivosDiretorio(Caminho);
-        /*
-         * 
-         * teste
-        for(File f : listarArquivosDiretorio){
-            System.out.print(f.getName() +"tamanho = " + (f.length() / 1024)+"\n");
-        */
+        try {
+            this.litaArquivos = tmp.listarArquivosDiretorio(Caminho);
+           
+        } catch (ErroValidaçãoException ex) {
+            //Logger.getLogger(frmScanner.class.getName()).log(Level.SEVERE, null, ex);
+            this.litaArquivos = null;
+            preencheTabela();
+        }
     }
     
     private void preencheTabela(){
@@ -83,6 +88,7 @@ public class frmScanner extends javax.swing.JInternalFrame {
         lblCaminhoDaMidia = new javax.swing.JLabel();
         txtCaminhoDaMidia = new javax.swing.JTextField();
         btnScan = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1000, 650));
         setPreferredSize(new java.awt.Dimension(1000, 650));
@@ -118,6 +124,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
             }
         });
 
+        btnRemove.setText("Remover");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,9 +143,6 @@ public class frmScanner extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtCodMidia, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblCaminhoDaMidia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,8 +150,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
                         .addGap(47, 47, 47)
                         .addComponent(btnEscolher)
                         .addGap(104, 104, 104)
-                        .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRemove)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,8 +171,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
                     .addComponent(txtCaminhoDaMidia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEscolher)
                     .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(btnRemove)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
@@ -174,13 +194,24 @@ public class frmScanner extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEscolherActionPerformed
 
     private void btnScanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScanActionPerformed
-        listarArquivosDietorio(txtCaminhoDaMidia.getText());
-        preencheTabela();
+        if(txtCaminhoDaMidia.getText().isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "O caminho da midia não pode ser vazio !");
+        }else{ 
+            listarArquivosDietorio(txtCaminhoDaMidia.getText());
+            preencheTabela();
+        }
     }//GEN-LAST:event_btnScanActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+       if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja remover ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
+           
+       }
+    }//GEN-LAST:event_btnRemoveActionPerformed
    
     private List<File> litaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscolher;
+    private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnScan;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCaminhoDaMidia;
