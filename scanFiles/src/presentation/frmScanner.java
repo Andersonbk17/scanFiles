@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -36,11 +34,11 @@ public class frmScanner extends javax.swing.JInternalFrame {
     private void listarArquivosDietorio(String Caminho){
       Diretorios tmp = new Diretorios();
         try {
-            this.litaArquivos = tmp.listarArquivosDiretorio(Caminho);
+            this.listaArquivos = tmp.listarArquivosDiretorio(Caminho);
            
         } catch (ErroValidaçãoException ex) {
             //Logger.getLogger(frmScanner.class.getName()).log(Level.SEVERE, null, ex);
-            this.litaArquivos = null;
+            this.listaArquivos = null;
             preencheTabela();
         }
     }
@@ -52,7 +50,7 @@ public class frmScanner extends javax.swing.JInternalFrame {
         modelo.addColumn("Data de Criação");
         modelo.addColumn("Tamanho");
         DateFormat df = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss.SSS");  
-        for(File a : this.litaArquivos){
+        for(File a : this.listaArquivos){
             Vector v = new Vector();
             v.add(0,a.getName());
             v.add(1,a.getPath());
@@ -106,6 +104,11 @@ public class frmScanner extends javax.swing.JInternalFrame {
 
             }
         ));
+        tblListaDeArquivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListaDeArquivosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblListaDeArquivos);
 
         btnEscolher.setText("Escolher");
@@ -204,11 +207,16 @@ public class frmScanner extends javax.swing.JInternalFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
        if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja remover ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
-           
+           this.listaArquivos.remove(this.idRemover);
+           preencheTabela();
        }
     }//GEN-LAST:event_btnRemoveActionPerformed
-   
-    private List<File> litaArquivos = new LinkedList<>();
+
+    private void tblListaDeArquivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaDeArquivosMouseClicked
+        this.idRemover = tblListaDeArquivos.getSelectedRow();
+    }//GEN-LAST:event_tblListaDeArquivosMouseClicked
+    private int idRemover;
+    private List<File> listaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscolher;
     private javax.swing.JButton btnRemove;
