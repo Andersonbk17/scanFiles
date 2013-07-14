@@ -4,8 +4,10 @@
  */
 package presentation;
 
+import dataAccess.MidiaDAO;
 import domainModel.Diretorios;
 import domainModel.ErroValidaçãoException;
+import domainModel.Midia;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -246,7 +248,15 @@ public class frmScanner extends javax.swing.JInternalFrame {
        if(this.listaArquivos.isEmpty()){
            JOptionPane.showMessageDialog(rootPane, "Nada a salvar !");
        }else if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja Salvar a midia ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
-           //codigo pra salvar
+           MidiaDAO dao = new MidiaDAO();
+           Midia midia = new Midia();
+           midia.setCodMidia(txtCodMidia.getText());
+           midia.setListaDeArquivos(listaArquivos);
+           if(dao.Salvar(midia)){
+                JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso !");
+           }else{
+                JOptionPane.showMessageDialog(rootPane, "Erro ao salvar !");
+           }
            limpaCampos();
        }
     }//GEN-LAST:event_btnSalvarActionPerformed
