@@ -22,7 +22,7 @@ public class UsuarioDAO {
  
     private FileOutputStream arquivo = null;
     private ObjectOutputStream out = null;
-    private String nomeArquivo = "arquivo.txt";
+    private String nomeArquivo = "./data/usr";
     
     public boolean Salvar(Usuario obj ){
         try {

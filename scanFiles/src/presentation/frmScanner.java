@@ -104,12 +104,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
         btnSalvar = new javax.swing.JButton();
         lblDescricao = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
+        btnSair = new javax.swing.JButton();
 
         setTitle("Scanner de Midia");
         setMinimumSize(new java.awt.Dimension(1000, 650));
         setPreferredSize(new java.awt.Dimension(1000, 650));
 
-        lblCodMidia.setText("Código da Midia");
+        lblCodMidia.setText("Rótulo da Midia");
 
         txtCodMidia.setToolTipText("Código da Midia (pode conter numero e letras)");
 
@@ -165,6 +166,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
 
         txtDescricao.setToolTipText("Campo de descrição da midia (OPCIONAL)");
 
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,16 +182,17 @@ public class frmScanner extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblCodMidia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCodMidia, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addComponent(txtCodMidia, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +235,9 @@ public class frmScanner extends javax.swing.JInternalFrame {
                                 .addGap(96, 96, 96)
                                 .addComponent(btnRemove)
                                 .addGap(32, 32, 32)
-                                .addComponent(btnSalvar))))
+                                .addComponent(btnSalvar)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnSair))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -284,11 +295,18 @@ public class frmScanner extends javax.swing.JInternalFrame {
            limpaCampos();
        }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        if(JOptionPane.showConfirmDialog(rootPane,"Você tem certeza que deseja sair ?","Pergunta",JOptionPane.OK_CANCEL_OPTION) == 0){
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSairActionPerformed
     private int idRemover;
     private List<File> listaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscolher;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnScan;
     private javax.swing.JScrollPane jScrollPane1;
