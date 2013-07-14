@@ -102,6 +102,8 @@ public class frmScanner extends javax.swing.JInternalFrame {
 
         lblCodMidia.setText("Código da Midia");
 
+        txtCodMidia.setToolTipText("Código da Midia (pode conter numero e letras)");
+
         tblListaDeArquivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -228,7 +230,9 @@ public class frmScanner extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnScanActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-       if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja remover ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
+       if(this.listaArquivos.isEmpty()){
+           JOptionPane.showMessageDialog(rootPane, "Nada a remover !");
+       }else if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja remover ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
            this.listaArquivos.remove(this.idRemover);
            preencheTabela();
        }
@@ -239,7 +243,9 @@ public class frmScanner extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblListaDeArquivosMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-       if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja Salvar a midia ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
+       if(this.listaArquivos.isEmpty()){
+           JOptionPane.showMessageDialog(rootPane, "Nada a salvar !");
+       }else if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja Salvar a midia ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
            //codigo pra salvar
            limpaCampos();
        }
