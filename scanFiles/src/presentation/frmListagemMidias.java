@@ -6,12 +6,9 @@ package presentation;
 
 import dataAccess.MidiaDAO;
 import domainModel.Midia;
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.LinkedBlockingDeque;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,12 +28,13 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
     private void preencheTabela(){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
-        modelo.addColumn("Código");
+        modelo.addColumn("Rótulo");
         modelo.addColumn("Numero de Arquivos");
         modelo.addColumn("Descrição");
-        MidiaDAO dao = new MidiaDAO();
+        //MidiaDAO dao = new MidiaDAO();
+        //this.listaMidias = dao.listarMidias();
         int id = 0;
-        for(Midia m : dao.listarMidias()){
+        for(Midia m : this.listaMidias){
             ++id;
             Vector v = new Vector();
             v.add(0,id);
@@ -47,9 +45,7 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
         }
         tblListaMidias.setModel(modelo);
         tblListaMidias.repaint();
-        
-    
-    
+  
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,27 +153,36 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
         switch(opcao){
         
             case 0:
+                this.listaMidias.clear();
+                this.listaMidias = dao.listarMidias();
+                preencheTabela();
                 break;
             case 1:
-                List<Midia>lista = new LinkedList<>();
+                this.listaMidias.clear();
                 for(Midia m : dao.listarMidias()){
-                    for(File f : m.getListaDeArquivos()){
-                        if(f.getName().matches("(?i).*"+ txtFiltro.getText() +".*")){
-                            
-                        }
+                       if(m.getDescricao().matches("(?i).*"+ txtFiltro.getText() +".*")){
+                               this.listaMidias.add(m);     
                     }
                 }
                 
-                
+                preencheTabela();
                 break;
             case 2:
+                this.listaMidias.clear();
+                for(Midia m : dao.listarMidias()){
+                       if(m.getCodMidia().matches("(?i).*"+ txtFiltro.getText() +".*")){
+                               this.listaMidias.add(m);     
+                    }
+                }
+                
+                preencheTabela();
                 break;
         
         
         
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
-
+    private List<Midia> listaMidias = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltro;
     private javax.swing.JComboBox cbjFiltro;
