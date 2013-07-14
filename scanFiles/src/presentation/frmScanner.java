@@ -245,7 +245,7 @@ public class frmScanner extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblListaDeArquivosMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-       if(this.listaArquivos.isEmpty()){
+       if(this.listaArquivos.isEmpty() || this.txtCodMidia.getText().isEmpty()){// verificar
            JOptionPane.showMessageDialog(rootPane, "Nada a salvar !");
        }else if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja Salvar a midia ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
            MidiaDAO dao = new MidiaDAO();

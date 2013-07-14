@@ -12,7 +12,7 @@ public class teste {
     public static void main(String[] args) {
      
         MidiaDAO dao = new MidiaDAO();
-        dao.Abrir();
+        System.out.print(dao.listarMidias());
         
     }
 }
