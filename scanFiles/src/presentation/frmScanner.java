@@ -55,20 +55,24 @@ public class frmScanner extends javax.swing.JInternalFrame {
     
     private void preencheTabela(){
         DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
         modelo.addColumn("Nome do Arquivo");
         modelo.addColumn("Caminho");
         modelo.addColumn("Data de Criação");
         modelo.addColumn("Tamanho");
         DateFormat df = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss.SSS");  
+        int id = 0;
         for(File a : this.listaArquivos){
             Vector v = new Vector();
-            v.add(0,a.getName());
-            v.add(1,a.getPath());
+            ++id;
+            v.add(0,id);
+            v.add(1,a.getName());
+            v.add(2,a.getPath());
             Date tmpData = new Date(a.lastModified());
             df.format(tmpData);
             
-            v.add(2,tmpData);
-            v.add(3,(a.length() / 1024));
+            v.add(3,tmpData);
+            v.add(4,(a.length() / 1024));
             //v.add(3,a.getTipo());
             modelo.addRow(v);
         

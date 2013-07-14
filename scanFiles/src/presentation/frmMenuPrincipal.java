@@ -78,6 +78,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuListagem.add(jMenuItemMidia);
 
         jMenuItemArquivos.setText("Arquivos");
+        jMenuItemArquivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemArquivosActionPerformed(evt);
+            }
+        });
         jMenuListagem.add(jMenuItemArquivos);
 
         jMenuBar1.add(jMenuListagem);
@@ -133,6 +138,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         janela.setVisible(true);
         add(janela);
     }//GEN-LAST:event_jMenuItemMidiaActionPerformed
+
+    private void jMenuItemArquivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemArquivosActionPerformed
+        frmListagemArquivos janela = new frmListagemArquivos();
+        janela.setVisible(true);
+        add(janela);
+    }//GEN-LAST:event_jMenuItemArquivosActionPerformed
 
     /**
      * @param args the command line arguments

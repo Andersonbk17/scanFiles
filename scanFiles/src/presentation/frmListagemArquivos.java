@@ -7,6 +7,9 @@ package presentation;
 import dataAccess.MidiaDAO;
 import domainModel.Midia;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -18,12 +21,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author lewandowsky
  */
-public class frmListagemMidias extends javax.swing.JInternalFrame {
+public class frmListagemArquivos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmListagemMidias
      */
-    public frmListagemMidias() {
+    public frmListagemArquivos() {
         initComponents();
         preencheTabela();
     }
@@ -31,25 +34,31 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
     private void preencheTabela(){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
-        modelo.addColumn("Código");
-        modelo.addColumn("Numero de Arquivos");
-        modelo.addColumn("Descrição");
-        MidiaDAO dao = new MidiaDAO();
+        modelo.addColumn("Nome do Arquivo");
+        modelo.addColumn("Caminho");
+        modelo.addColumn("Data de Criação");
+        modelo.addColumn("Tamanho");
+        DateFormat df = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss.SSS");  
         int id = 0;
-        for(Midia m : dao.listarMidias()){
-            ++id;
+        for(File a : this.listaArquivos){
             Vector v = new Vector();
+            ++id;
             v.add(0,id);
-            v.add(1,m.getCodMidia());
-            v.add(2,m.getListaDeArquivos().size());
-            v.add(3,m.getDescricao());
+            v.add(1,a.getName());
+            v.add(2,a.getPath());
+            Date tmpData = new Date(a.lastModified());
+            df.format(tmpData);
+            
+            v.add(3,tmpData);
+            v.add(4,(a.length() / 1024));
+            //v.add(3,a.getTipo());
             modelo.addRow(v);
-        }
-        tblListaMidias.setModel(modelo);
-        tblListaMidias.repaint();
         
-    
-    
+        }
+        
+        this.tblListaArquivos.setModel(modelo);
+        this.tblListaArquivos.repaint();
+   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,18 +70,18 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblListaMidias = new javax.swing.JTable();
+        tblListaArquivos = new javax.swing.JTable();
         lblFiltro = new javax.swing.JLabel();
         txtFiltro = new javax.swing.JTextField();
         btnFiltro = new javax.swing.JButton();
         cbjFiltro = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
 
-        setTitle("Listagem de Midias");
+        setTitle("Listagem de Arquivos");
         setMinimumSize(new java.awt.Dimension(1000, 650));
         setPreferredSize(new java.awt.Dimension(1000, 650));
 
-        tblListaMidias.setModel(new javax.swing.table.DefaultTableModel(
+        tblListaArquivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -83,7 +92,7 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tblListaMidias);
+        jScrollPane1.setViewportView(tblListaArquivos);
 
         lblFiltro.setText("Filtro");
 
@@ -94,7 +103,7 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
             }
         });
 
-        cbjFiltro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione", "Descrição", "Cod. Midia" }));
+        cbjFiltro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione", "Nome" }));
         cbjFiltro.setToolTipText("Selecione o tipo de Filtro");
 
         jButton1.setText("Sair");
@@ -157,18 +166,25 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
         switch(opcao){
         
             case 0:
-                break;
-            case 1:
-                List<Midia>lista = new LinkedList<>();
+                this.listaArquivos.clear();
                 for(Midia m : dao.listarMidias()){
                     for(File f : m.getListaDeArquivos()){
+                        this.listaArquivos.add(f);
+                    }
+                }
+                preencheTabela();
+                break;
+            case 1:
+                this.listaArquivos.clear();
+               for(Midia m : dao.listarMidias()){
+                    for(File f : m.getListaDeArquivos()){
                         if(f.getName().matches("(?i).*"+ txtFiltro.getText() +".*")){
-                            
+                            this.listaArquivos.add(f);
                         }
                     }
                 }
                 
-                
+                preencheTabela();
                 break;
             case 2:
                 break;
@@ -177,14 +193,14 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
         
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
-
+    private List<File> listaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltro;
     private javax.swing.JComboBox cbjFiltro;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFiltro;
-    private javax.swing.JTable tblListaMidias;
+    private javax.swing.JTable tblListaArquivos;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }
