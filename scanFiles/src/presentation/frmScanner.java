@@ -30,6 +30,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
         initComponents();
     }
     
+    private void limpaCampos(){
+        txtCaminhoDaMidia.setText("");
+        txtCodMidia.setText("");
+        this.listaArquivos.clear();
+        preencheTabela();
+    
+    }
     
     private void listarArquivosDietorio(String Caminho){
       Diretorios tmp = new Diretorios();
@@ -87,7 +94,9 @@ public class frmScanner extends javax.swing.JInternalFrame {
         txtCaminhoDaMidia = new javax.swing.JTextField();
         btnScan = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
+        setTitle("Scanner de Midia");
         setMinimumSize(new java.awt.Dimension(1000, 650));
         setPreferredSize(new java.awt.Dimension(1000, 650));
 
@@ -134,6 +143,13 @@ public class frmScanner extends javax.swing.JInternalFrame {
             }
         });
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,19 +162,23 @@ public class frmScanner extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtCodMidia, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblCaminhoDaMidia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCaminhoDaMidia, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnEscolher)
-                        .addGap(104, 104, 104)
-                        .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblCaminhoDaMidia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCaminhoDaMidia, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnEscolher)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemove)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,7 +200,9 @@ public class frmScanner extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
-                        .addComponent(btnRemove)))
+                        .addComponent(btnRemove)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnSalvar)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
@@ -215,11 +237,19 @@ public class frmScanner extends javax.swing.JInternalFrame {
     private void tblListaDeArquivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaDeArquivosMouseClicked
         this.idRemover = tblListaDeArquivos.getSelectedRow();
     }//GEN-LAST:event_tblListaDeArquivosMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+       if(JOptionPane.showConfirmDialog(rootPane, "Você tem certeza que deseja Salvar a midia ?","Pergunta", JOptionPane.OK_CANCEL_OPTION) == 0){
+           //codigo pra salvar
+           limpaCampos();
+       }
+    }//GEN-LAST:event_btnSalvarActionPerformed
     private int idRemover;
     private List<File> listaArquivos = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscolher;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnScan;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCaminhoDaMidia;
