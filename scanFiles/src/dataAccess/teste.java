@@ -5,6 +5,7 @@
 package dataAccess;
 
 import domainModel.Midia;
+import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -25,9 +26,16 @@ public class teste {
         nome.add("Anderson.txt");
         nome.add("carlos.dat");
         
+        File dir = new File("./teste");
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        
+        /*
         if(nome.get(0).matches("(?i).*  frase    .*")){
             System.out.printf("tem");
         }
+        * *
         
         /*
          Fazer os testes de expressão regular

@@ -23,16 +23,28 @@ import java.util.logging.Logger;
 public class MidiaDAO {
         private FileOutputStream arquivo = null;
         private ObjectOutputStream out = null;
-        private String nomeArquivo = "midia"+ retornaNumeroMidia() +".dat";
+        private String nomeArquivo = "./data/midia"+ retornaNumeroMidia() +".dat";
     
+        private void verificaPasta(){
+            File dir = new File("./data");
+            if(!dir.exists()){
+                dir.mkdir();
+            }
+        
+        }
+        
+        
+        
         public boolean Salvar(Midia obj){
             try {
+                 verificaPasta();
                 arquivo = new FileOutputStream(nomeArquivo);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(MidiaDAO.class.getName()).log(Level.SEVERE, null, ex);
                 return false;
             }
             try {
+               
                 out = new ObjectOutputStream(arquivo);
                 out.writeObject(obj);
                 out.close();
@@ -76,26 +88,26 @@ public class MidiaDAO {
         
            Diretorios dir = new Diretorios();
            int qtd= 0 ;
-        try {
-            qtd =  dir.listarArquivosDiretorio("./").size();
-        } catch (ErroValidaçãoException ex) {
-            Logger.getLogger(MidiaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return qtd;
+            try {
+                verificaPasta();
+                qtd =  dir.listarArquivosDiretorio("./data").size();
+            } catch (ErroValidaçãoException ex) {
+                Logger.getLogger(MidiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return qtd;
            
        }
        
        public List<Midia> listarMidias(){
            Diretorios dir = new Diretorios();
-           //List<File> listaArquivos = new LinkedList<>();
+           
            List<Midia> listaMidia = new LinkedList<>();//verificar uso
             try {
-                 
-                for(File  f : dir.listarArquivosDiretorio("./")){
+                 verificaPasta();
+                for(File  f : dir.listarArquivosDiretorio("./data")){
                     if( f.getName().endsWith(".dat")){
-                        //listaArquivos.add(f);
-                        listaMidia.add(Abrir(f.getName()));
-                        
+                          listaMidia.add(Abrir("./data/"+f.getName()));
+                                              
                     }
             }
             } catch (ErroValidaçãoException ex) {
