@@ -85,22 +85,24 @@ public class MidiaDAO {
            
        }
        
-       public List<File> listarMidias(){
+       public List<Midia> listarMidias(){
            Diretorios dir = new Diretorios();
-           List<File> listaArquivos = new LinkedList<>();
-           
+           //List<File> listaArquivos = new LinkedList<>();
+           List<Midia> listaMidia = new LinkedList<>();//verificar uso
             try {
                  
                 for(File  f : dir.listarArquivosDiretorio("./")){
                     if( f.getName().endsWith(".dat")){
-                        listaArquivos.add(f);
+                        //listaArquivos.add(f);
+                        listaMidia.add(Abrir(f.getName()));
+                        
                     }
             }
             } catch (ErroValidaçãoException ex) {
                 Logger.getLogger(MidiaDAO.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
             }
-            return listaArquivos;
+            return listaMidia;
        
        }
        

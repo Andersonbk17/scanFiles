@@ -12,7 +12,8 @@ public class teste {
     public static void main(String[] args) {
      
         MidiaDAO dao = new MidiaDAO();
-        System.out.print(dao.listarMidias());
+        System.out.print(dao.listarMidias().get(0).getListaDeArquivos());
+        
         
     }
 }

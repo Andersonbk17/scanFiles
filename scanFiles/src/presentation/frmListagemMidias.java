@@ -4,6 +4,11 @@
  */
 package presentation;
 
+import dataAccess.MidiaDAO;
+import domainModel.Midia;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author lewandowsky
@@ -15,8 +20,32 @@ public class frmListagemMidias extends javax.swing.JInternalFrame {
      */
     public frmListagemMidias() {
         initComponents();
+        preencheTabela();
     }
 
+    private void preencheTabela(){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Código");
+        modelo.addColumn("Numero de Arquivos");
+        modelo.addColumn("Descrição");
+        MidiaDAO dao = new MidiaDAO();
+        int id = 0;
+        for(Midia m : dao.listarMidias()){
+            ++id;
+            Vector v = new Vector();
+            v.add(0,id);
+            v.add(1,m.getCodMidia());
+            v.add(2,m.getListaDeArquivos().size());
+            v.add(3,m.getDescricao());
+            modelo.addRow(v);
+        }
+        tblListaMidias.setModel(modelo);
+        tblListaMidias.repaint();
+        
+    
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
